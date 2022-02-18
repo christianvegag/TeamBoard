@@ -2,6 +2,7 @@ import express from "express";
 import userController from "../controllers/userController.js";
 import userValidate from "../middleware/userValidate.js";
 import roleValidate from "../middleware/roleValidate.js";
+import user from "../models/user.js";
 
 const router = express.Router();
 
@@ -15,5 +16,6 @@ router.post(
 );
 
 router.get("/listUser/:name?", userController.listUser);
+router.post("/login", userController.login)
 
 export default router;

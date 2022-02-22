@@ -101,7 +101,7 @@ const deleteUser = async (req, res) => {
   if (!req.params["_id"])
     return res.status(400).send({ message: "Incomplete data" });
 
-  // const users = await user.findByIdAndDelete(req.body._id); eliminar si
+  // const users = await user.findByIdAndDelete(req.body._id); eliminar todo
 
   const users = await user.findByIdAndUpdate(req.params["_id"], {
     dbStatus: false,
@@ -109,30 +109,32 @@ const deleteUser = async (req, res) => {
 
   return !users
     ? res.status(400).send({ message: "Error deleting user" })
-    : res.status(200).send({ message: "Used deleted" });
+    : res.status(200).send({ message: "User deleted" });
 };
 
 const updateUserAdmin = async (req, res) => {
   if (!req.body._id || !req.body.name || !req.body.role || !req.body.email)
     return res.status(400).send({ message: "Incomplete data" });
 
-    let pass = "";
+  let pass = "";
 
-    if(!req.body.password){
-      const findUser = await user.findOne({email:req.body.email});
-      pass = findUser.password
-    }else{
-      pass = await bcrypt.hash(req.body.password, 10)
-    }
+  if (!req.body.password) {
+    const findUser = await user.findOne({ email: req.body.email });
+    pass = findUser.password;
+  } else {
+    pass = await bcrypt.hash(req.body.password, 10);
+  }
 
-    const editUser = await user.findByIdAndUpdate(req.body._id,{
-      name: req.body.name,
-      password: pass,
-      role: req.body.role,
-    });
+  const editUser = await user.findByIdAndUpdate(req.body._id, {
+    name: req.body.name,
+    password: pass,
+    role: req.body.role,
+    modifyDate: new Date(),
+  });
 
-    if(!editUser) return res.status(500).send({message: "Error editing user"});
-    return res.status(200).send({message: "User updated"});
+  return !editUser
+    ? res.status(500).send({ message: "Error editing user" })
+    : res.status(200).send({ message: "User updated" });
 };
 
 export default {

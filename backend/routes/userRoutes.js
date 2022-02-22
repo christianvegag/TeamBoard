@@ -2,7 +2,6 @@ import express from "express";
 import userController from "../controllers/userController.js";
 import userValidate from "../middleware/userValidate.js";
 import roleValidate from "../middleware/roleValidate.js";
-import user from "../models/user.js";
 
 const router = express.Router();
 
@@ -19,7 +18,7 @@ router.get("/listUser/:name?", userController.listUser);
 router.get("/listUserAdmin/:name?", userController.listUserAdmin);
 router.post("/login", userController.login);
 router.put("/delete/:_id", userController.deleteUser);
-router.put("/updateUserAdmin", userController.updateUserAdmin);
+router.put("/updateUserAdmin",userValidate.status ,userController.updateUserAdmin);
 
 
 

@@ -21,15 +21,6 @@ const existingUserTask = async (req, res, next) => {
   next();
 };
 
-// const validateStatusUser = async (req, res, next) => {
-//     const status = await user.findOne({ _id: req.body.user });
-
-//     if (status.dbStatus == false)
-//       return res.status(500).send({ message: "User not found" });
-  
-//       next();
-//   };
-
 const validateStatusTask = async (req, res, next) => {
 
 let status = ["to-do","in-progress", "finish"];

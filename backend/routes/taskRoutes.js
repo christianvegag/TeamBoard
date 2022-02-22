@@ -9,7 +9,6 @@ const router = express.Router();
 router.post(
   "/registerTask",
   taskValidate.existingTask,
-  taskValidate.validateStatusUser,
   taskValidate.existingUserTask,
   taskController.registerTask
 );

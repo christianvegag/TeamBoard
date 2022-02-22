@@ -15,17 +15,20 @@ const existingUserTask = async (req, res, next) => {
 
   req.body.user = userId._id;
 
+  if (userId.dbStatus == false)
+      return res.status(500).send({ message: "User not found" });
+
   next();
 };
 
-const validateStatusUser = async (req, res, next) => {
-    const status = await user.findOne({ _id: req.body.user });
+// const validateStatusUser = async (req, res, next) => {
+//     const status = await user.findOne({ _id: req.body.user });
 
-    if (status.dbStatus == false)
-      return res.status(500).send({ message: "User not found" });
+//     if (status.dbStatus == false)
+//       return res.status(500).send({ message: "User not found" });
   
-      next();
-  };
+//       next();
+//   };
 
 const validateStatusTask = async (req, res, next) => {
 
@@ -36,4 +39,4 @@ let status = ["to-do","in-progress", "finish"];
   next();
 };
 
-export default { existingTask, existingUserTask, validateStatusTask, validateStatusUser };
+export default { existingTask, existingUserTask, validateStatusTask};
